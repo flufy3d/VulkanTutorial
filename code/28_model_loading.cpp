@@ -997,8 +997,9 @@ private:
         std::vector<tinyobj::material_t> materials;
         std::string warn, err;
 
-        if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, MODEL_PATH.c_str())) {
-            throw std::runtime_error(warn + err);
+        bool ret = LoadObj(&attrib, &shapes, &materials, &err, MODEL_PATH.c_str(), nullptr, true);
+        if (!ret) {
+            throw std::runtime_error(err);
         }
 
         std::unordered_map<Vertex, uint32_t> uniqueVertices{};
