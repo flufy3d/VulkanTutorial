@@ -64,8 +64,14 @@ function (add_chapter CHAPTER_NAME)
   else()
       target_link_libraries(${CHAPTER_NAME} Vulkan::Vulkan glfw)
   endif()
-  
+
   target_include_directories (${CHAPTER_NAME} PRIVATE ${STB_INCLUDEDIR})
+
+  if(MSVC)
+      set_target_properties(${CHAPTER_NAME} PROPERTIES
+          VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CHAPTER_NAME}
+      )
+  endif()
 
   if (DEFINED CHAPTER_SHADER)
     set (CHAPTER_SHADER_TARGET ${CHAPTER_NAME}_shader)
